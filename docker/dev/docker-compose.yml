@@ -1,0 +1,21 @@
+version: '3'
+
+volumes:
+  myshop:
+  appenv:
+    driver: local
+services:
+  oscar_db:
+    image: postgres
+  oscar_web:
+    build:
+      context: ../../
+      dockerfile: docker/dev/Dockerfile
+    volumes:
+      - ../../:/myshop
+      - appenv:/appenv
+    ports:
+      - "8000:8000"
+    command: ["python", "manage.py", "runserver", "0:8000"]
+    depends_on:
+      - oscar_db
