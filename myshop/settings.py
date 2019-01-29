@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
     'widget_tweaks',
+    'blogs.apps.BlogsConfig'
 ]+ get_core_apps()
 
 SITE_ID = 1
