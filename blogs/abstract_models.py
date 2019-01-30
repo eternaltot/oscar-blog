@@ -4,7 +4,6 @@ from oscar.core.compat import AUTH_USER_MODEL
 
 
 class Timestamp(models.Model):
-
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -13,7 +12,6 @@ class Timestamp(models.Model):
 
 
 class AbstractCategory(Timestamp):
-
     name = models.CharField(max_length=64)
 
     class Meta:
