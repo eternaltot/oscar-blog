@@ -8,12 +8,12 @@ CategoryMapping = get_model('blogs', 'CategoryMapping')
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('post_title',
-                    'post_author',
+    list_display = ('title',
+                    'author',
                     'post_date',
-                    'create_date',
-                    'update_date')
-    search_fields = ('post_title', 'post_author__username')
+                    'created_date',
+                    'updated_date')
+    search_fields = ('title', 'author__username')
     list_filter = ['post_date']
 
 

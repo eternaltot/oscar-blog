@@ -5,8 +5,8 @@ from oscar.core.compat import AUTH_USER_MODEL
 
 class Timestamp(models.Model):
 
-    create_date = models.DateTimeField(auto_now_add=True)
-    update_date = models.DateTimeField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
@@ -24,8 +24,8 @@ class AbstractCategory(Timestamp):
 
 
 class AbstractPost(Timestamp):
-    post_title = models.CharField(max_length=200)
-    post_content = models.TextField(blank=True)
+    title = models.CharField(max_length=200)
+    content = models.TextField(blank=True)
     featured_image = models.ImageField(
         _('Featured Image'), upload_to='images',
         blank=True, null=True, max_length=255
@@ -36,18 +36,18 @@ class AbstractPost(Timestamp):
         through='AbstractCategoryMapping',
         verbose_name=_("Category")
     )
-    post_excerpt = models.CharField(max_length=200)
-    post_author = models.ForeignKey(
+    excerpt = models.CharField(max_length=200)
+    author = models.ForeignKey(
         AUTH_USER_MODEL,
         blank=True, null=True,
         on_delete=models.CASCADE
     )
 
     class Meta:
-        ordering = ['-post_date', 'post_title']
+        ordering = ['-post_date', 'title']
 
     def __str__(self):
-        return self.post_title
+        return self.title
 
 
 class AbstractCategoryMapping(Timestamp):
