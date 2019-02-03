@@ -5,8 +5,7 @@ WORKDIR /myshop
 ADD requirements.txt /myshop/
 RUN pip install virtualenv
 RUN virtualenv /appenv && \
-    . /appenv/bin/activate && \ 
-    pip install -r requirements.txt
+    . /appenv/bin/activate
 COPY script/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
