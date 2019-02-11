@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+
+from django.utils.translation import ugettext_lazy as _
 from oscar.defaults import *
 from oscar import get_core_apps
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
@@ -43,8 +45,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
     'widget_tweaks',
-    'blogs.apps.BlogsConfig'
-]+ get_core_apps()
+    'blogs'
+]+ get_core_apps(
+    [   
+    'dashboard',
+    'dashboard.blogs'
+    ]
+)
 
 SITE_ID = 1
 
@@ -152,3 +159,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+OSCAR_DASHBOARD_NAVIGATION[5]['children'] += [
+    {
+        'label': _('Blog Posts'),
+        'url_name': 'blogs-post-list',
+    },
+    {
+        'label': _('Blog Categories'),
+        'url_name': 'dashboard:order-list',
+    }
+]

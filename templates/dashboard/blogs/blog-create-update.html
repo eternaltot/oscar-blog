@@ -1,0 +1,113 @@
+{% extends 'dashboard/layout.html' %}
+{% load sorting_tags %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block body_class %}{{ block.super }} Blogs{% endblock %}
+
+{% block title %}
+    {% trans "Blogs" %} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
+        </li>
+        <li class="active">{% trans "Blogs" %}</li>
+    </ul>
+{% endblock %}
+{% block header %}
+    <div class="page-header">
+        <h1>{% trans "Blogs" %}</h1>
+    </div>
+{% endblock header %}
+{% block dashboard_content %}
+<form action="." method="post" class="form-stacked wysiwyg fixed-actions" enctype="multipart/form-data" data-behaviour="affix-nav-errors" autocomplete="off">
+    {% csrf_token %}
+    <div class="row">
+    {% block tab_nav %}
+        <div class="col-md-3">
+            <div data-spy="affix" class="affix-top" data-offset-top="200">
+                <div class="table-header">
+                    <h3>{% trans "Sections" %}</h3>
+                </div>
+                <ul class="nav nav-list bs-docs-sidenav" id="blog_update_tab">
+                    {% comment %}
+                        The navigation below is filtered heavily on the product structure.
+                        This intentionally is the only place where filtering is done, as
+                        deployments are likely to want to override certain aspects of what
+                        data is stored on products of a certain structure. This means that
+                        only one template block (instead of all affected) has to be altered.
+                    {% endcomment %}
+                    {% block tabs %}
+                        <li class="active"><a href="#blog_detail" data-toggle="tab">{% trans 'Blog details' %}</a></li>
+                        {% if not parent %}
+                            <li><a href="#blog_categories" data-toggle="tab">{% trans 'Categories' %}</a></li>
+                        {% endif %}
+                    {% endblock tabs %}
+                </ul>
+            </div>
+        </div>
+    {% endblock tab_nav %}
+        <div class="col-md-9">
+            <div class="tab-content">
+                {% block tab_content %}
+                    {% block blog_detail %}
+                    <div class="tab-pane active" id="blog_detail">
+                        <div class="table-header">
+                            <h3>{% trans "Blog details" %}</h3>
+                        </div>
+                        {% block blog_detail_content %}
+                        <div class="well blog-details">
+                        {% include "dashboard/partials/form_fields.html" with form=form  %}
+                        </div>
+                        {% endblock blog_detail_content %}
+                    </div>
+                    {% endblock blog_detail %}
+                    {% block blog_categories %}
+                    <div class="tab-pane" id="blog_categories">
+                        <table class="table table-striped table-bordered form-inline">
+                            <caption>{% trans "Category" %}</caption>
+                            {{ category_formset.management_form }}
+                            {{ category_formset.non_form_errors }}
+                            {% for category_form in category_formset %}
+                                <tr>
+                                    <td>
+                                        {% include "dashboard/partials/form_fields_inline.html" with form=category_form %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    {% endblock blog_categories %}
+                {% endblock tab_content %}
+            </div>
+        </div>
+    </div>
+</div>
+    {% block fixed_actions_group %}
+        <div class="fixed-actions-group">
+            <div class="form-group">
+                <div class="pull-right">
+                    <a href="{% url 'blogs-post-list' %}">
+                        {% trans "Cancel" %}
+                    </a>
+                    {% trans "or" %}
+                    {% if parent %}
+                        <button class="btn btn-default btn-lg" name="action" type="submit" value="create-another-child" data-loading-text="{% trans 'Saving...' %}">
+                            {% trans "Save and add another variant" %}
+                        </button>
+                    {% endif %}
+                    <button class="btn btn-default btn-lg" name="action" type="submit" value="continue" data-loading-text="{% trans 'Saving...' %}">
+                        {% trans "Save and continue editing" %}
+                    </button>
+                    <button class="btn btn-primary btn-lg" name="action" type="submit" value="save" data-loading-text="{% trans 'Saving...' %}">
+                        {% trans "Save" %}
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% endblock fixed_actions_group %}
+</form>
+{% endblock dashboard_content %}

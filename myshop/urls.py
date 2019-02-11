@@ -16,11 +16,14 @@ Including another URLconf
 from django.conf.urls import include, url  # < Django-2.0
 from django.contrib import admin
 from oscar.app import application
-
+from blogs.app import application as blogs_app
+from dashboard.blogs.app import application as blogs_dashboard_app
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # path('admin/', admin.site.urls),  # > Django-2.0
 
     url(r'', application.urls),
     # path('', application.urls),  # > Django-2.0
+    url(r'^dashboard/blog/', include(blogs_dashboard_app.urls)),
+    url(r'^blog/', include(blogs_app.urls)),
 ]
