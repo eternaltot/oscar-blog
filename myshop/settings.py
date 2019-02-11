@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 from django.utils.translation import ugettext_lazy as _
-from oscar.defaults import *
+from oscar.defaults import * # noqa
 from oscar import get_core_apps
 from oscar import OSCAR_MAIN_TEMPLATE_DIR
 
@@ -46,11 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'widget_tweaks',
     'blogs'
-]+ get_core_apps(
-    [   
-    'dashboard',
-    'dashboard.blogs'
-    ]
+] + get_core_apps([
+                    'dashboard',
+                    'dashboard.blogs'
+                ]
 )
 
 SITE_ID = 1
@@ -90,7 +89,6 @@ TEMPLATES = [
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.customer.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
-
             ],
         },
     },

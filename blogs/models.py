@@ -1,6 +1,8 @@
 from oscar.core.loading import is_model_registered
 
-from blogs.abstract_models import AbstractCategory, AbstractCategoryMapping, AbstractPost
+from blogs.abstract_models import AbstractCategory
+from blogs.abstract_models import AbstractCategoryMapping
+from blogs.abstract_models import AbstractPost
 
 
 if not is_model_registered('blogs', 'Category'):

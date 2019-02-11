@@ -58,7 +58,8 @@ class TestBlogCreateView(test_mixins.WebTestCase):
             'categorymapping_set-1-post': '',
             'action': 'save'
         }
-        response = self.client.post(self.url_create_view, data=data, follow=True)
+        response = self.client.post(self.url_create_view,
+                                    data=data, follow=True)
         self.assertRedirects(response, self.url_list_view)
 
         expect_post = Post.objects.get(title=data['title'])

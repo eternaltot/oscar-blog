@@ -15,7 +15,8 @@ class TestCreatePostActionForm(TestCase):
         self.user = factories.UserFactory(is_superuser=True)
 
     def test_should_have_field_that_we_expect(self):
-        expected = ['title', 'content', 'featured_image', 'post_date', 'excerpt', 'author']
+        expected = ['title', 'content', 'featured_image',
+                    'post_date', 'excerpt', 'author']
         self.assertEquals(expected, self.form.Meta.fields)
 
     def test_require_field_should_have_check_required(self):

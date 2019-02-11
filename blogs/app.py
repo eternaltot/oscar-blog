@@ -1,7 +1,4 @@
 from oscar.core.application import Application
-from oscar.core.loading import get_class
-
-from django.conf.urls import url
 
 
 class BlogApplication(Application):
@@ -18,7 +15,8 @@ class BlogApplication(Application):
             # url(r'^detail/(?P<slug>[\w-]*)/$',
             #     self.blog_detail_view.as_view(), name='blog-detail'),
             # url(r'^category/(?P<slug>[\w-]*)/$',
-            #     self.blog_category_list.as_view(), name='blog-category-list'),
+            #     self.blog_category_list.as_view(),
+            #     name='blog-category-list'),
         ]
         return self.post_process_urls(urls)
 
