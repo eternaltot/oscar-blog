@@ -1,5 +1,6 @@
-blogs/__pycache__
-blogs/migrations/__pycache__
+blogs/__pycache__*
+blogs/migrations/__pycache__*
 images
-myshop/__pycache__
-*/__pycache__
+myshop/__pycache__/*
+dashboard/__pycache__/*
+dashboard/blogs/__pycache__/*

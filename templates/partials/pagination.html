@@ -1,0 +1,21 @@
+{% load display_tags %}
+{% load i18n %}
+
+{% if paginator.num_pages > 1 %}
+    <nav class="pagination">
+        <div class="column">
+            <ul class="pages">
+                {% with ''|center:paginator.num_pages as range %}
+                    {% for _ in range %}
+                        <li {% if forloop.counter == page_obj.number %}class="active"{% endif %}><a href="?{% get_parameters page %}page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+                    {% endfor %}
+                {% endwith %}
+            </ul>
+        </div>
+         {% if page_obj.has_next %}
+            <div class="column text-right hidden-xs-down">
+                <a class="btn btn-outline-secondary btn-sm" href="?{% get_parameters page %}page={{ page_obj.next_page_number }}">{% trans "Next" %}&nbsp;<i class="icon-arrow-right"></i></a>
+            </div>
+        {% endif %}
+    </nav>
+{% endif %}

@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Blog" %} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="page-title">
+        <div class="container">
+            <div class="column">
+                <ul class="breadcrumbs">
+                    <li><a href="{{ homepage_url }}">{% trans "Home" %}</a>
+                    </li>
+                    <li class="separator">&nbsp;</li>
+                    <li><a href="{% url 'blogs:blog-list' %}">{% trans "Blog" %}</a>
+                    </li>
+                    {% if category %}
+                        <li class="separator">&nbsp;</li>
+                        <li>{{ category.name }}
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block column_left %}
+    {% block search_posts %}
+        <section class="widget">
+            <form action="{% url 'blogs:blog-list' %}" method="get" class="input-group form-group">
+                {% include "partials/form_fields.html" with form=form nolabel=True %}
+                <span class="input-group-append">
+                    <button type="submit" name="search"><i class="icon-search"></i></button>
+                </span>
+            </form>
+        </section>
+    {% endblock search_posts %}
+    <section class="widget widget-categories">
+        <h3 class="widget-title">{% trans "Categories" %}</h3>
+        <ul>
+            {% if categories %}
+                {% for category in categories %}
+                    <li>
+                        <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                        <span>({{ category.get_num_posts }})</span>
+                    </li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <div class="col">
+        {% if posts %}
+            {% for post in posts %}
+                <article class="row">
+                    <div class="col-md-3 hidden-sm-down">
+                        <ul class="post-meta">
+                            <li><i class="icon-head"></i>&nbsp;{{ post.author.first_name}}&nbsp;{{post.author.last_name }}</li>
+                            <li><i class="icon-tag"></i>
+                                {% for category in post.categories.all %}
+                                    &nbsp;{{ category.name }}
+                                    {% if category != post.categories.all.last %},{% endif %}
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-9 blog-post">
+                        {% with image=post.featured_image %}
+                            {% if image %}
+                                {% thumbnail image "x350" upscale=False as thumb %}
+                                    <a class="post-thumb" href=""><img class="img-responsive" src="{{ post.featured_image.url }}" alt="Post"></a>
+                                {% endthumbnail %}
+                            {% endif %}
+                        {% endwith %}
+                        <h3 class="post-title"><a href="">{{ post.title }}</a></h3>
+                        <p>{{ post.excerpt|safe }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+           {% include "partials/pagination.html" %}
+        {% else %}
+            {% if search_not_found%}
+                {% trans "Found <strong>0</strong> results." %}
+            {% else %}
+                <p>{% trans "No blog have been made yet." %}</p>
+            {% endif %}
+
+        {% endif %}
+    </div>
+{% endblock %}

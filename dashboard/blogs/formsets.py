@@ -5,4 +5,4 @@ from blogs.models import Post, CategoryMapping
 
 
 CategoriesFormset = inlineformset_factory(
-    Post, CategoryMapping, form=CategoriesModelForm, extra=2)
+    Post, CategoryMapping, form=CategoriesModelForm, extra=1)

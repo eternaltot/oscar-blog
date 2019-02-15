@@ -71,3 +71,22 @@ class TestBlogCreateView(test_mixins.WebTestCase):
             ['<Category: {}>'.format(
                 self.blog_category.name)]
         )
+
+
+class TestBlogUpdateView(test_mixins.WebTestCase):
+    def setUp(self):
+
+        self.blog_category1 = factories.CategoryFactory()
+        self.blog_category2 = factories.CategoryFactory()
+        self.blog_post_with_category = factories.PostWithCategoryFactory(
+            post_category1__category=self.blog_category1,
+            post_category2__category=self.blog_category2)
+
+        self.blog_list_url = reverse('blogs-post-list')
+
+    def test_should_have_edit_post_when_user_is_staff(self):
+        self.login_as_super_user()
+
+        response = self.client.get(self.blog_post_with_category.get_absolute_url())
+        self.assertContains(response, 'Edit this post')
+

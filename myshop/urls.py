@@ -18,6 +18,8 @@ from django.contrib import admin
 from oscar.app import application
 from blogs.app import application as blogs_app
 from dashboard.blogs.app import application as blogs_dashboard_app
+from django.conf.urls.static import static
+from django.conf import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # path('admin/', admin.site.urls),  # > Django-2.0
@@ -25,5 +27,6 @@ urlpatterns = [
     url(r'', application.urls),
     # path('', application.urls),  # > Django-2.0
     url(r'^dashboard/blog/', include(blogs_dashboard_app.urls)),
-    url(r'^blog/', include(blogs_app.urls)),
+    url(r'^blogs/', include(blogs_app.urls)),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

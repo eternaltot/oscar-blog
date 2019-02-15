@@ -1,0 +1,38 @@
+{% extends 'dashboard/layout.html' %}
+{% load sorting_tags %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block body_class %}{{ block.super }} Blogs{% endblock %}
+
+{% block title %}
+    {% trans "Blogs" %} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
+        </li>
+        <li class="active">{% trans "Blogs" %}</li>
+    </ul>
+{% endblock %}
+{% block header %}
+    <div class="page-header">
+        <h1>{% trans "Blogs" %}</h1>
+    </div>
+{% endblock header %}
+{% block dashboard_content %}
+    <div class="table-header">
+        <h2>{% trans "Delete Post" %}</h2>
+    </div>
+    <form method="post" class="well">
+        {% csrf_token %}
+        {{ form }}
+        <p>{% blocktrans with title=object.title %}Delete page <strong>{{ title }}</strong> - are you sure?{% endblocktrans %}</p>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-danger" data-loading-text="{% trans 'Deleting...' %}">{% trans "Delete" %}</button>
+            {% trans "or" %} <a href="{% url 'blogs-post-list' %}">{% trans "cancel" %}</a>.
+        </div>
+    </form>
+{% endblock dashboard_content %}

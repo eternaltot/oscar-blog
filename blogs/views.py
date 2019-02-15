@@ -1,23 +1,24 @@
-from oscar.core.loading import get_model
+from oscar.core.loading import get_model, get_class
 
-from django.utils import datetime
+import datetime
 from django.views import generic
 
 Post = get_model('blogs', 'Post')
 Category = get_model('blogs', 'Category')
 CategoryMapping = get_model('blogs', 'CategoryMapping')
+PostSearchForm = get_class('blogs.forms', 'PostSearchForm')
 
 
-class BlogPostView(generic.ListView):
+class BlogIndexView(generic.ListView):
 
-    template_name = 'templates/blogs-post-list.html'
+    template_name = 'blogs/blog-list.html'
     model = Post
     paginate_by = 2
     context_object_name = 'posts'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['category'] = self.get_category()
+        context['category'] = self.get_categories()
         return context
 
     def get_posts_published(self, queryset):
