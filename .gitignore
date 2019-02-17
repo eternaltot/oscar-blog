@@ -3,3 +3,4 @@ images
 .vscode
 media
 cache
+.DS_Store

@@ -5,26 +5,13 @@
 {% block title %}
     {% trans "Blog" %} | {{ block.super }}
 {% endblock %}
-
 {% block breadcrumbs %}
-    <div class="page-title">
-        <div class="container">
-            <div class="column">
-                <ul class="breadcrumbs">
-                    <li><a href="{{ homepage_url }}">{% trans "Home" %}</a>
-                    </li>
-                    <li class="separator">&nbsp;</li>
-                    <li><a href="{% url 'blogs:blog-list' %}">{% trans "Blog" %}</a>
-                    </li>
-                    {% if category %}
-                        <li class="separator">&nbsp;</li>
-                        <li>{{ category.name }}
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </div>
+<ul class="breadcrumb">
+    <li>
+        <a href="/">{% trans "Home" %}</a>
+    </li>
+    <li class="active">{% trans "Blogs" %}</li>
+</ul>
 {% endblock %}
 
 {% block column_left %}
@@ -73,12 +60,12 @@
                         {% with image=post.featured_image %}
                             {% if image %}
                                 {% thumbnail image "x350" upscale=False as thumb %}
-                                    <a class="post-thumb" href=""><img class="img-responsive" src="{{ post.featured_image.url }}" alt="Post"></a>
+                                    <a class="post-thumb" href=""><img class="img-responsive" src="{{ image.url }}" alt="Post"></a>
                                 {% endthumbnail %}
                             {% endif %}
                         {% endwith %}
-                        <h3 class="post-title"><a href="">{{ post.title }}</a></h3>
-                        <p>{{ post.excerpt|safe }}</p>
+                        <h3 class="post-title"><a href="#">{{ post.title }}</a></h3>
+                        <p>{{ post.excerpt|safe }}...<a href="#">READ MORE</a></p>
                     </div>
                 </article>
             {% endfor %}
