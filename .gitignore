@@ -2,3 +2,4 @@ images
 **/__pycache__
 .vscode
 media
+cache
