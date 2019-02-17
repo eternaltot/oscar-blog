@@ -22,10 +22,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # path('admin/', admin.site.urls),  # > Django-2.0
-
     url(r'', application.urls),
-    # path('', application.urls),  # > Django-2.0
     url(r'^dashboard/blog/', include(blogs_dashboard_app.urls)),
     url(r'^blogs/', include(blogs_app.urls)),
 ]

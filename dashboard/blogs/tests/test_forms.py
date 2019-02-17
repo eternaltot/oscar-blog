@@ -11,7 +11,7 @@ Post = get_model('blogs', 'Post')
 class TestCreatePostActionForm(TestCase):
     def setUp(self):
         self.form = forms.PostModelForm
-        self.post = factories.PostFactory
+        self.post = factories.PostFactory()
         self.user = factories.UserFactory(is_superuser=True)
 
     def test_should_have_field_that_we_expect(self):
@@ -48,7 +48,7 @@ class TestCreatePostActionForm(TestCase):
 class TestUpdatePostActionForm(TestCase):
     def setUp(self):
         self.form = forms.PostModelForm
-        self.post = factories.PostFactory
+        self.post = factories.PostFactory()
         self.user = factories.UserFactory(is_superuser=True)
 
     def test_should_have_field_that_we_expect(self):

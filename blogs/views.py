@@ -1,6 +1,7 @@
+import datetime
+
 from oscar.core.loading import get_model, get_class
 
-import datetime
 from django.views import generic
 
 Post = get_model('blogs', 'Post')
@@ -10,7 +11,6 @@ PostSearchForm = get_class('blogs.forms', 'PostSearchForm')
 
 
 class BlogIndexView(generic.ListView):
-
     template_name = 'blogs/blog-list.html'
     model = Post
     paginate_by = 2

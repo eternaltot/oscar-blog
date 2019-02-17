@@ -7,11 +7,9 @@ User = get_user_model()
 
 class TestBlogIndexView(test_mixins.WebTestCase):
     def setUp(self):
-        print(User.objects.all())
         self.user = factories.UserFactory()
         self.blog_post = factories.PostWithCategoryFactory()
         self.blog_post_2 = factories.PostWithCategoryFactory()
-        # factories.PostWithCategoryFactory()
         self.blog_list_url = reverse('blogs-post-list')
 
     def test_should_have_data(self):
@@ -19,7 +17,7 @@ class TestBlogIndexView(test_mixins.WebTestCase):
         response = self.client.get(self.blog_list_url)
 
         self.assertEquals(response.status_code, 200)
-        self.assertQuerysetEqual(
+        self.assertListEqual(
             response.context['posts'],
             [
                 '<Post: {}>'.format(self.blog_post.title),
@@ -66,7 +64,7 @@ class TestBlogCreateView(test_mixins.WebTestCase):
         self.assertEqual(expect_post.title, data['title'])
 
         expect_post_categories = expect_post.categories.all()
-        self.assertQuerysetEqual(
+        self.assertListEqual(
             expect_post_categories,
             ['<Category: {}>'.format(
                 self.blog_category.name)]
@@ -75,7 +73,6 @@ class TestBlogCreateView(test_mixins.WebTestCase):
 
 class TestBlogUpdateView(test_mixins.WebTestCase):
     def setUp(self):
-
         self.blog_category1 = factories.CategoryFactory()
         self.blog_category2 = factories.CategoryFactory()
         self.blog_post_with_category = factories.PostWithCategoryFactory(
